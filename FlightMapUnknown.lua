@@ -381,7 +381,7 @@ FMU:SetScript("OnUpdate", function()
       local originName  = originEntry and originEntry.Name or "Unknown origin"
       local flights     = originEntry and originEntry.Flights or {}
       local destEntry   = FlightMap and FlightMap["Alliance"] and FMU._destKey and FlightMap["Alliance"][FMU._destKey]
-      local destName    = destEntry and destEntry.Name or FMU._destName or "Unknown destination"
+      local destName 	= (destEntry and destEntry.Name) or FMU._destName or FMU._destKey
       local expected    = flights and flights[FMU._destKey]
       FMU._expectedTime = expected
 

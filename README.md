@@ -4,7 +4,8 @@ Copy of https://github.com/TrangOul/FlightMap with the AI generated addition of 
 I am testing as I play, but so far this is a working version. I expect that many of the existing flight times will be adjusted with this addon as you discover more flight paths and because of the way registering flight times work in this verison.
 
 Summary:
-- Relearns flight times as you use new/unkonwn flight lines.
+- Relearns and prints flight times as you use known flight lines (sum of legs may not give an accurate time).
+- Shows a live measurement of time for unknoown flight paths.
 - Adds Turtle WoW-specific flight masters as they are discovered. Note: Does not pre-show flight masters that are specific to Turtle WoW. Upon first load, FlightMap will generate unkonwn, Turtle-specific nodes.
 
 # Old Description

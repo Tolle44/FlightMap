@@ -270,7 +270,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-185" y="-25"/>
+              <AbsDimension x="-175" y="-25"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -318,7 +318,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
             <Offset>
-              <AbsDimension x="-185" y="-145"/>
+              <AbsDimension x="-175" y="-145"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -331,6 +331,18 @@
           <Anchor point="TOPLEFT">
             <Offset>
               <AbsDimension x="25" y="-175"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+	  
+      <!-- Option #12; row 6, column 2 -->
+      <CheckButton name="$parentOpt12"
+                   inherits="FlightMapOptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="-175" y="-175"/>
             </Offset>
           </Anchor>
         </Anchors>

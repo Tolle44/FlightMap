@@ -99,40 +99,41 @@ FlightMapUtil.getContinent = function()
  return GetCurrentMapContinent(); 
 end 
 ------ Format and display functions 
--- Format a second amount into m:ss, returning "-:--" for zero seconds 
--- unless the "showZero" argument is true 
-FlightMapUtil.formatTime = function(secs, showZero) 
- if secs == 0 and not showZero then return "-:--"; end 
- return string.format("%d:%02d", secs / 60, math.mod(secs, 60)); 
-end 
+-- Format a second amount into m:ss, returning "-:--" for zero seconds
+-- unless the "showZero" argument is true
+FlightMapUtil.formatTime = function(secs, showZero)
+  if not secs then return "-:--"; end
+  -- Round to nearest second
+  local total = math.floor(tonumber(secs) + 0.5)
+  if total == 0 and not showZero then return "-:--"; end
+  local m = math.floor(total / 60)
+  local s = math.mod(total, 60)
+  return string.format("%d:%02d", m, s)
+end
 -- Format a copper amount into a gold, silver, copper string 
-FlightMapUtil.formatMoney = function(amount) 
- local FORMAT_GOLD = "\ncffddbb00%d%s\r"; 
- local FORMAT_SILVER = "\ncffcccccc%d%s\r"; 
- local FORMAT_COPPER = "\ncffcc9010%d%s\r"; 
- local copper = math.mod(amount, 100); 
- local silver = math.mod(math.floor(amount/100), 100); 
- local gold = math.floor(amount/10000); 
- local result = ""; 
- local pad = ""; 
- -- Only show gold and silver if they are non-zero 
- if gold > 0 then 
- local s = string.format(FORMAT_GOLD, gold, FLIGHTMAP_MONEY_GOLD); 
- result = result .. s; 
- pad = " "; 
- end 
- if silver > 0 then 
- local s = string.format(FORMAT_SILVER, silver, FLIGHTMAP_MONEY_SILVER); 
- result = result .. pad .. s; 
- pad = " "; 
- end 
- -- But show copper anyway if there's neither gold nor silver.. 
- if (gold == 0 and silver == 0) or copper > 0 then 
- local s = string.format(FORMAT_COPPER, copper, FLIGHTMAP_MONEY_COPPER); 
- result = result .. pad .. s; 
- end 
- return result; 
-end 
+FlightMapUtil.formatMoney = function(amount)
+  local FORMAT_GOLD   = "|cffddbb00%d%s|r"
+  local FORMAT_SILVER = "|cffcccccc%d%s|r"
+  local FORMAT_COPPER = "|cffcc9010%d%s|r"
+  local copper = math.mod(amount, 100)
+  local silver = math.mod(math.floor(amount/100), 100)
+  local gold = math.floor(amount/10000)
+  local result = ""
+  local pad = ""
+  if gold > 0 then
+    result = result .. string.format(FORMAT_GOLD, gold, FLIGHTMAP_MONEY_GOLD)
+    pad = " "
+  end
+  if silver > 0 or (gold > 0 and copper > 0) then
+    result = result .. pad .. string.format(FORMAT_SILVER, silver, FLIGHTMAP_MONEY_SILVER)
+    pad = " "
+  end
+  if copper > 0 or (gold == 0 and silver == 0) then
+    -- Always show copper if nothing else shown
+    result = result .. pad .. string.format(FORMAT_COPPER, copper, FLIGHTMAP_MONEY_COPPER)
+  end
+  return result
+end
 -- Draw a line by stretching the texture widget given in texture 
 -- across the parent frame given in parent. The coordinates 
 -- should be expressed as a number between 0 and 1, representing 

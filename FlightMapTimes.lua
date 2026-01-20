@@ -185,7 +185,7 @@ function FlightMapTimes_OnUpdate()
  if (not this.endTime) then
    -- New route measured
    if FLIGHTMAP_MSG_NEW_ROUTE_TIME then
-     DEFAULT_CHAT_FRAME:AddMessage(string.format(FLIGHTMAP_MSG_NEW_ROUTE_TIME, destOnly, tostring(measured).."s"), 0.85, 1.0, 0.9);
+     DEFAULT_CHAT_FRAME:AddMessage(string.format(FLIGHTMAP_MSG_NEW_ROUTE_TIME, destOnly, FlightMapUtil.formatTime(measured, true)), 0.85, 1.0, 0.9);
    end
    lSaveFlightTime(length, this.sourceNode, this.destNode);
    if FlightMapUtil.SaveMeasuredTime and originEntry then
@@ -194,7 +194,7 @@ function FlightMapTimes_OnUpdate()
  elseif (expected and math.abs(measured - expected) >= 2) then
    -- Update route if significant deviation
    if FLIGHTMAP_MSG_UPDATED_ROUTE_TIME then
-     DEFAULT_CHAT_FRAME:AddMessage(string.format(FLIGHTMAP_MSG_UPDATED_ROUTE_TIME, destOnly, tostring(measured).."s"), 0.85, 1.0, 0.9);
+     DEFAULT_CHAT_FRAME:AddMessage(string.format(FLIGHTMAP_MSG_UPDATED_ROUTE_TIME, destOnly, FlightMapUtil.formatTime(measured, true)), 0.85, 1.0, 0.9);
    end
    lSaveFlightTime(length, this.sourceNode, this.destNode);
    if FlightMapUtil.SaveMeasuredTime and originEntry then
@@ -228,9 +228,9 @@ function FlightMapTimes_OnUpdate()
   if elapsed < 0 then elapsed = 0; end
   local m = math.floor(elapsed / 60);
   local s = math.floor(elapsed - m * 60);
-  local mm = (m < 10) and ("0"..m) or tostring(m);
-  local ss = (s < 10) and ("0"..s) or tostring(s);
-  label = this.endPoint .. " - " .. mm .. ":" .. ss;
+  local mm = tostring(m)  -- minutes as plain number, no leading zero
+  local ss = (s < 10) and ("0"..s) or tostring(s)
+  label = this.endPoint .. " - " .. mm .. ":" .. ss
  end 
  FlightMapTimesText:SetText(label); 
  -- If alpha is below one, fade-in is active 
